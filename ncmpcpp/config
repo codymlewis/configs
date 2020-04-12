@@ -1,0 +1,90 @@
+# vim: set syntax=config:
+
+ncmpcpp_directory = ~/.config/ncmpcpp
+
+#lyrics_directory = ~/.lyrics
+#mpd_host = localhost
+#mpd_port = 6600
+#mpd_connection_timeout = 5
+mpd_music_dir = ~/Music
+mpd_crossfade_time = 2
+
+## Available values: spectrum, wave, wave_filled, ellipse.
+visualizer_type = wave_filled
+visualizer_look = ●▮
+visualizer_color = cyan
+
+# song_list_format = {%a - }{%t}|{$8%f$9}$R{$3(%l)$9}
+#song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
+#song_library_format = {%n - }{%t}|{%f}
+# alternative_header_first_line_format = $b$1$aqqu$/a$9 {%t}|{%f} $1$atqq$/a$9$/b
+#alternative_header_second_line_format = {{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}
+current_item_prefix = $(cyan)$r
+current_item_suffix = $/r$(end)
+#current_item_inactive_column_prefix = $(white)$r
+#current_item_inactive_column_suffix = $/r$(end)
+#now_playing_prefix = $b
+#now_playing_suffix = $/b
+#browser_playlist_prefix = "$2playlist$9 "
+# selected_item_prefix = $6
+# selected_item_suffix = $9
+#modified_item_prefix = $3> $9
+
+browser_sort_mode = name
+
+
+song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[yellow]{b} (7f)[white]{l}
+
+## Note: Possible display modes: classic, columns.
+# playlist_display_mode = columns
+# browser_display_mode = classic
+# search_engine_display_mode = classic
+# playlist_editor_display_mode = classic
+# discard_colors_if_item_is_selected = yes
+# show_duplicate_tags = yes
+# incremental_seeking = yes
+# seek_time = 1
+volume_change_step = 1
+# autocenter_mode = no
+# centered_cursor = no
+
+progressbar_look = —●—
+
+default_place_to_search_in = database
+
+user_interface = classic
+cyclic_scrolling = yes
+
+## Screens available for use: help, playlist, browser, search_engine,
+## media_library, playlist_editor, tag_editor, outputs, visualizer, clock,
+## lyrics, last_fm.
+#screen_switcher_mode = playlist, browser
+startup_screen = media_library
+
+clock_display_seconds = yes
+display_volume_level = yes
+display_bitrate = yes
+display_remaining_time = no
+
+external_editor = nvim
+## Note: set to yes if external editor is a console application.
+use_console_editor = yes
+
+
+colors_enabled = yes
+# empty_tag_color = cyan
+# header_window_color = cyan
+volume_color = default:b
+state_line_color = 55
+state_flags_color = red:b
+main_window_color = white
+color1 = white
+color2 = green
+progressbar_color = 60:b
+progressbar_elapsed_color = 55:b
+# statusbar_color = default
+# statusbar_time_color = default:b
+player_state_color = red:b
+# alternative_ui_separator_color = black:b
+# window_border_color = green
+# active_window_border = red

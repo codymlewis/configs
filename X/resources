@@ -1,0 +1,8 @@
+XTerm.termName: xterm-256color
+XTerm.vt100.locale: true
+XTerm.vt100.backarrowKey: false
+XTerm.ttyModes: erase ^?
+XTerm.vt100.saveLines: 4096
+XTerm.vt100.foreground: purple
+XTerm.vt100.background: black
+XTerm.vt100.faceName: Fira Code:size=9:antialias=true

@@ -1,0 +1,117 @@
+" Dein config
+if &compatible
+        set nocompatible
+endif
+
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+
+if dein#load_state('~/.cache/dein')
+        call dein#begin('~/.cache/dein')
+
+        call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+
+        call dein#add('vim-airline/vim-airline')
+        call dein#add('airblade/vim-gitgutter')
+        call dein#add('tpope/vim-commentary')
+        call dein#add('vim-scripts/auto-pairs-gentle')
+        call dein#add('yggdroot/indentline')
+        call dein#add('w0rp/ale')
+        call dein#add('shougo/deoplete.nvim')
+        call dein#add('Shougo/neosnippet.vim')
+        call dein#add('Shougo/neosnippet-snippets')
+        call dein#add('tpope/vim-fugitive')
+        call dein#add('majutsushi/tagbar')
+        call dein#add('sjl/badwolf')
+        call dein#add('amdt/vim-niji')
+        call dein#add('tpope/vim-obsession')
+        call dein#add('ludovicchabant/vim-gutentags')
+
+        call dein#end()
+        call dein#save_state()
+endif
+
+if dein#check_install()
+        call dein#install()
+endif
+
+filetype plugin indent on
+syntax enable
+
+" Plugin config
+let g:airline#extensions#tabline#enabled = 1
+let g:AutoPairsUseInsertedCount = 1
+map ; :Commentary<CR>
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+nmap <f8> :TagbarToggle<CR>
+let g:gitgutter_enabled = 1
+let g:deoplete#enable_at_startup = 1
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+let g:ale_haskell_ghc_options = "-dynamic"
+
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+let g:badwolf_darkgutter = 1
+colorscheme badwolf
+
+nmap <return> :Obsess!<CR>
+
+" General config
+set history=500
+
+set autoread
+au FocusGained,BufEnter * checktime
+
+let mapleader = " "
+
+nmap <leader>w :w!<cr>
+nmap <leader>s :setlocal spell!<CR>
+nmap <leader>h :wincmd h<CR>
+nmap <leader>j :wincmd j<CR>
+nmap <leader>k :wincmd k<CR>
+nmap <leader>l :wincmd l<CR>
+
+set number
+set relativenumber
+set wildmenu
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+set lazyredraw
+set magic
+syntax enable
+set background=dark
+set encoding=utf8
+set noswapfile
+set title
+
+set expandtab
+set smarttab
+set shiftwidth=8
+set tabstop=8
+set lbr
+set tw=80
+set autoindent
+set smartindent
+set wrap
+
+map <tab> :tabnext<CR>
+map <s-tab> :tabprev<CR>
+map <c-t> :Texplore<CR>
+map <c-w> :tabclose<CR>
+map <f5> :make<CR>
+map <f2> :set paste!<CR>
+
+autocmd BufWritePre * %s/\s\+$//e
+
+hi Normal guibg=NONE ctermbg=NONE
+hi NonText guibg=NONE ctermbg=NONE
