@@ -62,6 +62,8 @@ endif
 let g:badwolf_darkgutter = 1
 colorscheme badwolf
 
+let g:tex_conceal = ""
+
 nmap <return> :Obsess!<CR>
 
 " General config
@@ -104,10 +106,10 @@ set autoindent
 set smartindent
 set wrap
 
-map <tab> :tabnext<CR>
-map <s-tab> :tabprev<CR>
-map <c-t> :Texplore<CR>
-map <c-w> :tabclose<CR>
+map <tab> :bnext<CR>
+map <s-tab> :bprevious<CR>
+map <f9> :Explore<CR>
+map <f10> :buffer<space>
 map <f5> :make<CR>
 map <f2> :set paste!<CR>
 

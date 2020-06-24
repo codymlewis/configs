@@ -35,3 +35,5 @@ ncmpcpp/error.log
 mpd/state
 mpd/log
 mpd/database
+Android Open Source Project/
+QtProject.conf

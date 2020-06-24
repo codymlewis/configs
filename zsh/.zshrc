@@ -1,17 +1,27 @@
 #!/usr/bin/env zsh
 
-source "$ZDOTDIR/antigen.zsh"
+zmodload zsh/complist
+autoload -Uz compinit
+compinit
+setopt COMPLETE_ALIASES
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' completer _expand _complete _ignored _approximate _prefix
+zstyle ':completion:*' menu select=2
 
-antigen use oh-my-zsh
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
 
-antigen bundle wd
-antigen bundle sudo
+setopt INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY
+setopt SHARE_HISTORY
 
-antigen theme norm
+[[ -n "${key[Up]}"    ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
+[[ -n "${key[Down]}"  ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
 
-antigen apply
+export PROMPT="%F{green}%n%f%F{yellow}@%f%B%F{blue}%m%b%f %F{magenta}%~%f %F{red}%#%f "
 
-alias wd="wd --config ~/.config/zsh/warprc"
+bindkey -e
 
 alias ls="ls -hN --color=auto --group-directories-first"
 alias sl="ls"
@@ -40,6 +50,8 @@ alias .....="cd ../../../../"
 alias tmuxcon='tmux -q has-session && exec tmux attach-session -d || exec tmux new-session -n"$USER" -s"$USER"@"$HOSTNAME"'
 bindkey -s '^N' 'ncmpcpp\n'
 bindkey -s '^P' 'f=$(fzf) && open "$f"\n'
+bindkey -s "^V" 'pulsemixer\n'
+bindkey -s "^Z" 'fzfmpc\n'
 
 open () {
         for a in $@; do
@@ -52,13 +64,6 @@ open () {
 
 alias yd="youtube-dl -ic --add-metadata -f 'bestvideo+bestaudio/best'" # Download video link
 alias yda="youtube-dl -x -f bestaudio/best" # Download only audio
-
-ydall () {
-        olddir=$(pwd)
-        cd $HOME/Videos
-        youtube-dl $@ -ic --add-metadata -f 'bestvideo+bestaudio/best' 'https://www.youtube.com/playlist?list=PLtrReXASdY_GciC24eqggMeQ0xgHsTZKY'
-        cd "$olddir"
-}
 
 gdoc () {
         refer -PS -e -p "$HOME/Groff/bibliography" "$1.ms" | \
@@ -86,6 +91,27 @@ b () {
                 echo "Backing up files..." && \
                 cp -r "$HOME/Desktop" "$HOME/Music" "$HOME/suckless" "$HOME/mnt/backup/$bak_fol" && echo "Done Backup" && \
                 u "$HOME/mnt/backup"
+}
+
+wd () {
+        config="$HOME/.config/zsh/warprc"
+        case $1 in
+                "list")
+                       sed 's/ / -> /' "$config"
+                ;;
+                "add")
+                       printf "%s %s\n" "$2" "$PWD" >> "$config"
+                ;;
+                "rm")
+                       temp=$(grep -v "$2"\\s "$config")
+                       echo "$temp" > "$config"
+                ;;
+                *)
+                       wp=$(grep -m1 "$1[[:space:]]" "$config" | awk '{ print $2 }')
+                       cd "$wp" || \
+                              (echo "Could not warp to point $1" && exit)
+                ;;
+        esac
 }
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
