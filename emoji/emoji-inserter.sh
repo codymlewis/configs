@@ -1,7 +1,7 @@
 #!/bin/bash
 
 EMOJI=$(cat "$HOME/.config/emoji/emoji-list.txt" |
-        rofi -dmenu -i -p "Which emoji would you like" |
+        dmenu -i -p "Which emoji would you like" |
         awk '{print $1}')
 ! [[ $EMOJI = "" ]] &&
         (printf  "%s" "$EMOJI" | xsel) &&

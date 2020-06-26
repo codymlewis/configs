@@ -48,10 +48,8 @@ alias ...="cd ../../"
 alias ....="cd ../../../"
 alias .....="cd ../../../../"
 alias tmuxcon='tmux -q has-session && exec tmux attach-session -d || exec tmux new-session -n"$USER" -s"$USER"@"$HOSTNAME"'
-bindkey -s '^N' 'ncmpcpp\n'
 bindkey -s '^P' 'f=$(fzf) && open "$f"\n'
-bindkey -s "^V" 'pulsemixer\n'
-bindkey -s "^Z" 'fzfmpc\n'
+bindkey -s "^Z" 'setsid $TERMINAL 2>&1 > /dev/null &\n'
 
 open () {
         for a in $@; do

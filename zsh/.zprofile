@@ -27,9 +27,5 @@ export ANDROIDAPI="26"
 [ -d "$HOME.rvm" ] && export PATH="$PATH:$HOME.rvm/bin"
 [[ -s "$HOME.rvm/scripts/rvm" ]] && source "$HOME.rvm/scripts/rvm"
 
-pgrep 'tmux' > /dev/null ||
-        (tmux new-session -d 'nvim ~/Desktop/dash.md' &&
-        tmux new-window 'ncmpcpp' &&
-        tmux next-window)
 pgrep 'mpd' > /dev/null || mpd ~/.config/mpd/mpd.conf &
 pgrep 'startx' > /dev/null || startx
