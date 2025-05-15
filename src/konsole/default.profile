@@ -3,7 +3,7 @@ ColorScheme=Linux
 Font=Fira Code,11
 
 [General]
-Command=fish
+Command=/usr/bin/zsh
 Name=default
 Parent=FALLBACK/
 ShowTerminalSizeHint=false
