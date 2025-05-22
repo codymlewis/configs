@@ -100,7 +100,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 vim.api.nvim_create_autocmd({'BufLeave', 'FocusLost'}, {
-    pattern = { '*.py', '*.c', '*.h', '*.cpp', '*.hpp', '*.rs', '*.tex', '*.bib', '*.lua', '*.sh' },
+    pattern = { '*.py', '*.c', '*.h', '*.cpp', '*.hpp', '*.rs', '*.tex', '*.bib', '*.lua', '*.sh', '*.toml', 'Dockerfile' },
     callback = function()
         vim.api.nvim_command [[write]]
     end,
