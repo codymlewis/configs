@@ -25,3 +25,11 @@ neogit = "2.0.0"
 [plugins.cmp-nvim-lsp-signature-help]
 git = "hrsh7th/cmp-nvim-lsp-signature-help"
 rev = "031e6ba70b0ad5eee49fd2120ff7a2e325b17fa7"
+
+[plugins.nvim-treesitter]
+git = "nvim-treesitter/nvim-treesitter"
+rev = "v0.10.0"
+
+[plugins.vim-moonfly-colors]
+git = "bluz71/vim-moonfly-colors"
+rev = "ff822100c5d268e0db79e8e725cbd3ade3470de3"

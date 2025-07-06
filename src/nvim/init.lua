@@ -132,6 +132,23 @@ vim.keymap.set('n', '<leader>g', function() require('neogit').open() end, option
 vim.keymap.set("n", ";", "gcc", { remap = true })
 vim.keymap.set("v", ";", "gc", { remap = true })
 
+require("nvim-treesitter.configs").setup {
+    ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "python", "rust" },
+    sync_install = false,
+    auto_install = false,
+    highlight = {
+        enable = true,
+        disable = function(lang, buf)
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+                return true
+            end
+        end,
+        additional_vim_regex_highlighting = false,
+    }
+}
+
 local cmp = require("cmp")
 cmp.setup({
     snippet = {
@@ -141,8 +158,8 @@ cmp.setup({
     },
 
     sources = {
-        { name = "nvim_lsp" },
         { name = 'nvim_lsp_signature_help' },
+        { name = "nvim_lsp" },
         { name = "buffer" },
     },
 
@@ -164,13 +181,19 @@ require("lspconfig").ruff.setup{ capabilities = capabilities, }
 require("lspconfig").pyright.setup{ capabilities = capabilities, }
 require("lspconfig").rust_analyzer.setup{ capabilities = capabilities, }
 require("lspconfig").clangd.setup{ capabilities = capabilities, }
-vim.diagnostic.config({ virtual_text = true })
+vim.diagnostic.config({
+    virtual_lines = {
+        current_line = true,
+    },
+})
 
 require('marks').setup()
 
 require('nvim-autopairs').setup()
 
-require("ibl").setup()
+require("ibl").setup{
+    indent = { char = "┊" },
+}
 
 require("gitsigns").setup()
 require("neogit").setup{}
@@ -179,4 +202,4 @@ require('lualine').setup{
     options = { theme = 'codedark', }
 }
 
-vim.api.nvim_command [[colorscheme unokai]]
+vim.api.nvim_command [[colorscheme moonfly]]
