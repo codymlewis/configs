@@ -202,4 +202,4 @@ require('lualine').setup{
     options = { theme = 'codedark', }
 }
 
-vim.api.nvim_command [[colorscheme moonfly]]
+vim.api.nvim_command [[colorscheme cyberdream]]

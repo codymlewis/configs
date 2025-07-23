@@ -30,6 +30,6 @@ rev = "031e6ba70b0ad5eee49fd2120ff7a2e325b17fa7"
 git = "nvim-treesitter/nvim-treesitter"
 rev = "v0.10.0"
 
-[plugins.vim-moonfly-colors]
-git = "bluz71/vim-moonfly-colors"
-rev = "ff822100c5d268e0db79e8e725cbd3ade3470de3"
+[plugins."cyberdream.nvim"]
+git = "scottmckendry/cyberdream.nvim"
+rev = "v5.2.0"
