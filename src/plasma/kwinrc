@@ -1,6 +1,3 @@
-[Activities][LastVirtualDesktop]
-1ff2d561-05dd-4e93-954d-6d3693f64816=fa81ad25-8954-4ae8-986c-4efd2c14a1bd
-
 [Desktops]
 Id_1=fa81ad25-8954-4ae8-986c-4efd2c14a1bd
 Id_2=7a11ce3f-4ce4-46c2-89d6-8fa40c053c9b
@@ -18,14 +15,9 @@ BorderActivate=9
 
 [NightColor]
 Active=true
-Mode=Location
 
 [Plugins]
 hidecursorEnabled=true
-
-[SubSession: 22884248-1789-43ca-bb87-32521a0db337]
-active=-1
-count=0
 
 [Tiling]
 padding=4

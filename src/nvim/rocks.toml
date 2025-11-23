@@ -5,9 +5,9 @@
 # List of Neovim plugins to install alongside their versions.
 # If the plugin name contains a dot then you must add quotes to the key name!
 [plugins]
-"rocks.nvim" = "2.44.0"
-"rocks-git.nvim" = "2.5.3"
-nvim-lspconfig = "2.1.0"
+"rocks.nvim" = "2.46.1"
+"rocks-git.nvim" = "2.5.6"
+nvim-lspconfig = "2.5.0"
 "marks.nvim" = "scm"
 nvim-autopairs = "scm"
 "indent-blankline.nvim" = "3.9.0"
@@ -20,7 +20,7 @@ cmp-nvim-lsp = "scm"
 "gitsigns.nvim" = "1.0.2"
 nvim-dap = "0.10.0"
 nvim-dap-python = "scm"
-neogit = "2.0.0"
+neogit = "3.0.0"
 
 [plugins.cmp-nvim-lsp-signature-help]
 git = "hrsh7th/cmp-nvim-lsp-signature-help"
@@ -32,4 +32,4 @@ rev = "v0.10.0"
 
 [plugins."cyberdream.nvim"]
 git = "scottmckendry/cyberdream.nvim"
-rev = "v5.2.0"
+rev = "v5.3.0"
