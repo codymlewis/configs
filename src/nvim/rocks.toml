@@ -5,26 +5,27 @@
 # List of Neovim plugins to install alongside their versions.
 # If the plugin name contains a dot then you must add quotes to the key name!
 [plugins]
-"rocks.nvim" = "2.46.1"
-"rocks-git.nvim" = "2.5.6"
-nvim-lspconfig = "2.5.0"
+"rocks.nvim" = "2.47.4"
+"rocks-git.nvim" = "2.5.10"
+nvim-lspconfig = "2.7.0"
 "marks.nvim" = "scm"
 nvim-autopairs = "scm"
-"indent-blankline.nvim" = "3.9.0"
+"indent-blankline.nvim" = "3.9.1"
 nvim-cmp = "scm"
 cmp-path = "scm"
 cmp-cmdline = "scm"
 cmp-buffer = "scm"
 cmp-nvim-lsp = "scm"
 "lualine.nvim" = "scm"
-"gitsigns.nvim" = "1.0.2"
+"gitsigns.nvim" = "2.1.0"
 nvim-dap = "0.10.0"
 nvim-dap-python = "scm"
 neogit = "3.0.0"
+"mason.nvim" = "2.2.1"
 
 [plugins.cmp-nvim-lsp-signature-help]
 git = "hrsh7th/cmp-nvim-lsp-signature-help"
-rev = "031e6ba70b0ad5eee49fd2120ff7a2e325b17fa7"
+rev = "fd3e882e56956675c620898bf1ffcf4fcbe7ec84"
 
 [plugins.nvim-treesitter]
 git = "nvim-treesitter/nvim-treesitter"

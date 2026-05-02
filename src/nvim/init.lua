@@ -176,16 +176,31 @@ cmp.setup({
     },
 })
 
+require("mason").setup()
+
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-require("lspconfig").ruff.setup{ capabilities = capabilities, }
-require("lspconfig").pyright.setup{ capabilities = capabilities, }
-require("lspconfig").rust_analyzer.setup{ capabilities = capabilities, }
-require("lspconfig").clangd.setup{ capabilities = capabilities, }
+
+local servers = {
+    'tsserver',
+    'jsonls',
+    'eslint',
+    'ruff',
+    'pyright',
+    'rust_analyzer',
+    'clangd',
+    'harper_ls',
+}
+for _, server in pairs(servers) do
+    vim.lsp.config(server, { capabilities = capabilities, })
+    vim.lsp.enable(server)
+end
+
 vim.diagnostic.config({
     virtual_lines = {
         current_line = true,
     },
 })
+vim.lsp.inline_completion.enable()
 
 require('marks').setup()
 
