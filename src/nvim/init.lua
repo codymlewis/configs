@@ -1,49 +1,24 @@
-do
-    -- Specifies where to install/use rocks.nvim
-    local install_location = vim.fs.joinpath(vim.fn.stdpath("data") --[[@as string]], "rocks")
-
-    -- Set up configuration options related to rocks.nvim (recommended to leave as default)
-    local rocks_config = {
-        rocks_path = vim.fs.normalize(install_location),
-    }
-
-    vim.g.rocks_nvim = rocks_config
-
-    -- Configure the package path (so that plugin code can be found)
-    local luarocks_path = {
-        vim.fs.joinpath(rocks_config.rocks_path, "share", "lua", "5.1", "?.lua"),
-        vim.fs.joinpath(rocks_config.rocks_path, "share", "lua", "5.1", "?", "init.lua"),
-    }
-    package.path = package.path .. ";" .. table.concat(luarocks_path, ";")
-
-    -- Configure the C path (so that e.g. tree-sitter parsers can be found)
-    local luarocks_cpath = {
-        vim.fs.joinpath(rocks_config.rocks_path, "lib", "lua", "5.1", "?.so"),
-        vim.fs.joinpath(rocks_config.rocks_path, "lib64", "lua", "5.1", "?.so"),
-    }
-    package.cpath = package.cpath .. ";" .. table.concat(luarocks_cpath, ";")
-
-    -- Add rocks.nvim to the runtimepath
-    vim.opt.runtimepath:append(vim.fs.joinpath(rocks_config.rocks_path, "lib", "luarocks", "rocks-5.1", "rocks.nvim", "*"))
-end
-
--- If rocks.nvim is not installed then install it!
-if not pcall(require, "rocks") then
-    local rocks_location = vim.fs.joinpath(vim.fn.stdpath("cache") --[[@as string]], "rocks.nvim")
-
-    if not vim.uv.fs_stat(rocks_location) then
-        -- Pull down rocks.nvim
-        local url = "https://github.com/nvim-neorocks/rocks.nvim"
-        vim.fn.system({ "git", "clone", "--filter=blob:none", url, rocks_location })
-        -- Make sure the clone was successfull
-        assert(vim.v.shell_error == 0, "rocks.nvim installation failed. Try exiting and re-entering Neovim!")
-    end
-
-    -- If the clone was successful then source the bootstrapping script
-    vim.cmd.source(vim.fs.joinpath(rocks_location, "bootstrap.lua"))
-
-    vim.fn.delete(rocks_location, "rf")
-end
+vim.pack.add{
+    "https://github.com/neovim/nvim-lspconfig",
+    "https://github.com/chentoast/marks.nvim",
+    "https://github.com/windwp/nvim-autopairs",
+    "https://github.com/lukas-reineke/indent-blankline.nvim",
+    "https://github.com/nvim-treesitter/nvim-treesitter",
+    "https://github.com/hrsh7th/nvim-cmp",
+    "https://github.com/hrsh7th/cmp-path",
+    "https://github.com/hrsh7th/cmp-cmdline",
+    "https://github.com/hrsh7th/cmp-buffer",
+    "https://github.com/hrsh7th/cmp-nvim-lsp",
+    "https://github.com/hrsh7th/cmp-nvim-lsp-signature-help",
+    "https://github.com/nvim-lualine/lualine.nvim",
+    "https://github.com/lewis6991/gitsigns.nvim",
+    "https://github.com/mfussenegger/nvim-dap",
+    "https://github.com/mfussenegger/nvim-dap-python",
+    "https://github.com/NeogitOrg/neogit",
+    "https://github.com/mason-org/mason.nvim",
+    "https://github.com/Julian/lean.nvim",
+    "https://github.com/scottmckendry/cyberdream.nvim"
+}
 
 vim.o.history = 500
 vim.o.autoread = true
@@ -81,6 +56,8 @@ vim.bo.undofile = true
 vim.g.netrw_liststyle = 3
 vim.g.netrw_banner = 0
 
+vim.g.lean_config = { mappings = true, }
+
 vim.opt.clipboard = 'unnamedplus'
 
 vim.api.nvim_create_autocmd({'BufRead', 'BufNewFile'}, {
@@ -100,7 +77,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 vim.api.nvim_create_autocmd({'BufLeave', 'FocusLost'}, {
-    pattern = { '*.py', '*.c', '*.h', '*.cpp', '*.hpp', '*.rs', '*.tex', '*.bib', '*.lua', '*.sh', '*.toml', 'Dockerfile' },
+    pattern = { '*.py', '*.c', '*.h', '*.cpp', '*.hpp', '*.rs', '*.tex', '*.bib', '*.lua', '*.sh', '*.lean', '*.toml', 'Dockerfile' },
     callback = function()
         vim.api.nvim_command [[write]]
     end,
@@ -109,6 +86,7 @@ vim.api.nvim_create_autocmd({'BufLeave', 'FocusLost'}, {
 
 vim.api.nvim_set_keymap('n', '<Space>', "", {})
 vim.g.mapleader = ' '
+vim.g.maplocalleader = '  '
 
 options = { noremap = true }
 vim.api.nvim_set_keymap('n', '<leader>s', ':setlocal spell!<cr>', options)
@@ -132,22 +110,12 @@ vim.keymap.set('n', '<leader>g', function() require('neogit').open() end, option
 vim.keymap.set("n", ";", "gcc", { remap = true })
 vim.keymap.set("v", ";", "gc", { remap = true })
 
-require("nvim-treesitter.configs").setup {
-    ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "python", "rust" },
-    sync_install = false,
-    auto_install = false,
-    highlight = {
-        enable = true,
-        disable = function(lang, buf)
-            local max_filesize = 100 * 1024 -- 100 KB
-            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-            if ok and stats and stats.size > max_filesize then
-                return true
-            end
-        end,
-        additional_vim_regex_highlighting = false,
-    }
-}
+require("nvim-treesitter").install{ "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "python", "rust", }
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { '*.c', '*.cpp', '*.h', '*.hpp', '*.vim', '*.md', '*.py', '*.rs', },
+  callback = function() vim.treesitter.start() end,
+})
 
 local cmp = require("cmp")
 cmp.setup({
@@ -172,7 +140,7 @@ cmp.setup({
     preselect = cmp.PreselectMode.None,
 
     completion = {
-        compteopt = vim.o.completeopt,
+        completeopt = vim.o.completeopt,
     },
 })
 
@@ -189,6 +157,7 @@ local servers = {
     'rust_analyzer',
     'clangd',
     'harper_ls',
+    'docker_language_server',
 }
 for _, server in pairs(servers) do
     vim.lsp.config(server, { capabilities = capabilities, })
