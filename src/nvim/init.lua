@@ -3,7 +3,6 @@ vim.pack.add{
     "https://github.com/chentoast/marks.nvim",
     "https://github.com/windwp/nvim-autopairs",
     "https://github.com/lukas-reineke/indent-blankline.nvim",
-    "https://github.com/nvim-treesitter/nvim-treesitter",
     "https://github.com/hrsh7th/nvim-cmp",
     "https://github.com/hrsh7th/cmp-path",
     "https://github.com/hrsh7th/cmp-cmdline",
@@ -19,6 +18,10 @@ vim.pack.add{
     "https://github.com/Julian/lean.nvim",
     "https://github.com/scottmckendry/cyberdream.nvim"
 }
+
+vim.pack.add({
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", load = true },
+})
 
 vim.o.history = 500
 vim.o.autoread = true
@@ -110,12 +113,23 @@ vim.keymap.set('n', '<leader>g', function() require('neogit').open() end, option
 vim.keymap.set("n", ";", "gcc", { remap = true })
 vim.keymap.set("v", ";", "gc", { remap = true })
 
+require('nvim-treesitter').setup {
+    install_dir = vim.fn.stdpath('data') .. '/site'
+}
 require("nvim-treesitter").install{ "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "python", "rust", }
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { '*.c', '*.cpp', '*.h', '*.hpp', '*.vim', '*.md', '*.py', '*.rs', },
-  callback = function() vim.treesitter.start() end,
+    pattern = { "c", "cpp", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "python", "rust" },
+    callback = function()
+        vim.treesitter.start()
+        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.wo.foldmethod = 'expr'
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        vim.opt.foldlevel = 99
+        vim.opt.foldlevelstart = 99
+    end,
 })
+
 
 local cmp = require("cmp")
 cmp.setup({
