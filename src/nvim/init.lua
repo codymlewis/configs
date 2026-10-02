@@ -1,14 +1,10 @@
 vim.pack.add{
     "https://github.com/neovim/nvim-lspconfig",
+    "https://github.com/saghen/blink.lib",
+    "https://github.com/saghen/blink.cmp",
     "https://github.com/chentoast/marks.nvim",
     "https://github.com/windwp/nvim-autopairs",
     "https://github.com/lukas-reineke/indent-blankline.nvim",
-    "https://github.com/hrsh7th/nvim-cmp",
-    "https://github.com/hrsh7th/cmp-path",
-    "https://github.com/hrsh7th/cmp-cmdline",
-    "https://github.com/hrsh7th/cmp-buffer",
-    "https://github.com/hrsh7th/cmp-nvim-lsp",
-    "https://github.com/hrsh7th/cmp-nvim-lsp-signature-help",
     "https://github.com/nvim-lualine/lualine.nvim",
     "https://github.com/lewis6991/gitsigns.nvim",
     "https://github.com/mfussenegger/nvim-dap",
@@ -16,11 +12,11 @@ vim.pack.add{
     "https://github.com/NeogitOrg/neogit",
     "https://github.com/mason-org/mason.nvim",
     "https://github.com/Julian/lean.nvim",
-    "https://github.com/scottmckendry/cyberdream.nvim"
+    "https://github.com/scottmckendry/cyberdream.nvim",
 }
 
 vim.pack.add({
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter", load = true },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter", load = true },
 })
 
 vim.o.history = 500
@@ -131,36 +127,16 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 
-local cmp = require("cmp")
+local cmp = require('blink.cmp')
+cmp.build():pwait()
 cmp.setup({
-    snippet = {
-        expand = function(args)
-            vim.snippet.expand(args.body)
-        end,
-    },
-
-    sources = {
-        { name = 'nvim_lsp_signature_help' },
-        { name = "nvim_lsp" },
-        { name = "buffer" },
-    },
-
-    mapping = {
-        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-        ["<Tab>"] = cmp.mapping.select_next_item(),
-        ["<CR>"] = cmp.mapping.confirm({ select = false }),
-    },
-
-    preselect = cmp.PreselectMode.None,
-
-    completion = {
-        completeopt = vim.o.completeopt,
-    },
+    keymap = { preset = 'super-tab' },
+    completion = { documentation = { auto_show = true } },
+    signature = { enabled = true },
 })
 
-require("mason").setup()
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require("mason").setup()
 
 local servers = {
     'tsserver',
@@ -174,7 +150,6 @@ local servers = {
     'docker_language_server',
 }
 for _, server in pairs(servers) do
-    vim.lsp.config(server, { capabilities = capabilities, })
     vim.lsp.enable(server)
 end
 
