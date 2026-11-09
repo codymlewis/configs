@@ -143,7 +143,7 @@ local servers = {
     'jsonls',
     'eslint',
     'ruff',
-    'pyright',
+    'pyrefly',
     'rust_analyzer',
     'clangd',
     'harper_ls',
